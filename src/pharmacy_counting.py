@@ -1,3 +1,11 @@
+import os
+
+fn = './input/itcont.txt'
+f_out = './output/top_cost_drug.txt'
+if not os.path.isfile(fn):
+    fn = '../input/itcont.txt'
+    f_out = '../output/top_cost_drug.txt'
+
 class Drug():
     def __init__(self, drug_name):
         self.drug_name = drug_name
@@ -6,8 +14,10 @@ class Drug():
     def output(self):
         return self.drug_name + ',' + str(len(self.patient)) +',' + str(self.cost)+'\n' 
     
-drug_dict= {}    
-with open('../input/itcont.txt') as f:
+drug_dict= {}
+
+with open(fn) as f:
+
     next(f)
     for line in f:
         if line.strip() == '':
@@ -32,7 +42,7 @@ with open('../input/itcont.txt') as f:
 sorted_drug = sorted(list(drug_dict.values()), key = lambda x: (x.cost, x.drug_name),
                                     reverse = True)    
 
-with open('../output/top_cost_drug.txt', 'a') as f:
+with open(f_out, 'a') as f:
     f.write('drug_name,num_prescriber,total_cost\n')
     for i in sorted_drug:
         f.write(i.output())
